@@ -1,0 +1,25 @@
+{
+  "name": "puppeteer-explore",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "ts-node-dev --respawn ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ollie1700/puppeteer-explore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ollie1700/puppeteer-explore/issues"
+  },
+  "homepage": "https://github.com/ollie1700/puppeteer-explore#readme",
+  "dependencies": {
+    "puppeteer": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^5.4.4",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2"
+  }
+}

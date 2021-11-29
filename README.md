@@ -10,4 +10,6 @@
 
 The main code is run on `./src/index.ts` - all tasks can be done in this one file.
 
-1. Read the comments carefully and understand the flow of the logic using Puppeteer. Get a few different screenshots from a few different websites, and find an element on those websites using the existing code.
+1. Find 3 sites with cookie popups - test them all with the button finding logic and compare the pre/post cookie screenshots. If the post cookie screenshot still has the CMP, did it find the wrong element based on the text? etc.
+
+2. Implement the same thing but with the iframe snippet so we click a button within the iframe. Test using: https://plus.net

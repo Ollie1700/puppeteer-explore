@@ -6,7 +6,6 @@ import puppeteer from 'puppeteer'
 
   // Create a virtual browser using puppeteer - this is the equivalent of opening up Chrome on your PC
   const browser = await puppeteer.launch({
-    // Config that we don't need to worry about yet
     headless: true,
     defaultViewport: {
       width: 1920,
@@ -17,27 +16,59 @@ import puppeteer from 'puppeteer'
   // Create a virtual "page" - this is the equivalent of opening a new tab in your Chrome browser
   const page = await browser.newPage()
 
-  // Navigate to a website (feel free to change the website) - this is the equivalent of typing in an address and hitting enter in Chrome
-  await page.goto('https://google.co.uk')
+  // IFRAME LINK: https://www.plus.net
+  await page.goto('https://www.waterstones.com')
+
+  // get iframe
+  // const iframe = await page.$('iframe[src*="trustarc.com"]')
+  // if (iframe) {
+  //   const frame = await iframe.contentFrame()
+  //   if (frame) {
+  //     await frame.evaluate(() => {
+  //       // FIND BUTTON WITH SAME LOGIC
+  //     })
+  //   }
+  // }
+
+  await page.waitForTimeout(2000)
 
   // Take a screenshot so we can see what Puppeteer "sees"
   await page.screenshot({
-    path: './screenshots/test.png',
-    fullPage: true
+    path: './screenshots/pre_cookies.png'
   })
 
   // We can use the "evaluate" method to execute JavaScript on the website - this is the equivalent of typing JS into the Chrome console
-  const result = await page.evaluate(() => {
+  const keywords = [
+    'accept',
+    'cookies',
+    'accept all',
+    'ok',
+    'okay'
+  ]
+  
+  const result = await page.evaluate((keywords) => {
     // Any code inside of here is executed on the PAGE - we cannot mix and match variables inside here with our Node project outside
 
-    // Find the Google logo on the page
-    const logo = document.querySelector('img[alt="Google"]')
+    const allElements = document.querySelectorAll('*')
 
-    // Return true/false depending if the logo was found
-    return !! logo
+    for (let i = 0; i < allElements.length; i++) {
+      const element: any = allElements[i]
+      if (keywords.includes(element.innerText.toLowerCase())) {
+        element.click()
+        return true
+      }
+    }
+
+    return false
+  }, keywords)
+
+  console.log(`Found button: ${result}`)
+
+  await page.waitForTimeout(2000)
+
+  await page.screenshot({
+    path: './screenshots/post_cookies.png'
   })
-
-  console.log(`Did we find the Google logo? ${result}`)
 
   // Let the user know we're done
   console.log('Done!')

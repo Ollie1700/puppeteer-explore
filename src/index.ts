@@ -3,8 +3,8 @@ import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import findAndClickButton from './findAndClickButton'
 
-// Create an "async" environment so we can use "await"
-;(async () => {
+  // Create an "async" environment so we can use "await"
+  ; (async () => {
 
     // Create a virtual browser using puppeteer - this is the equivalent of opening up Chrome on your PC
     puppeteer.use(StealthPlugin())

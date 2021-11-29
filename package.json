@@ -15,7 +15,9 @@
   },
   "homepage": "https://github.com/ollie1700/puppeteer-explore#readme",
   "dependencies": {
-    "puppeteer": "^11.0.0"
+    "puppeteer": "^11.0.0",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-stealth": "^2.9.0"
   },
   "devDependencies": {
     "@types/puppeteer": "^5.4.4",

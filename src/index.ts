@@ -22,16 +22,28 @@ import findAndClickButton from './findAndClickButton'
     page.on('console', message => console.log(`[PAGE CONSOLE] ${message.text()}`))
 
     // IFRAME LINK: https://www.plus.net
-    await page.goto('https://www.plus.net')
+    await page.goto('https://www.asda.com')
     await page.waitForTimeout(5000)
     await page.screenshot({
       path: './screenshots/pre_cookies3.png'
     })
 
     const keywords = [
-      'accept',
+      'accept all cookies',
+      'accept all',
+      'ok',
+      'accept all cookies and continue',
+      'accept all and continue',
+      'allow all',
+      'okay, thanks',
       'agree',
-      'allow',
+      'i accept',
+      'accept cookies',
+      'accept',
+      'accept and close',
+      'allow cookies',
+      'allow all cookies',
+      'i accept all cookies',
     ]
 
     // Get iframe or normal page, depending if iframe was found
@@ -39,6 +51,7 @@ import findAndClickButton from './findAndClickButton'
     const iframe = await page.$('iframe[src*="trustarc.com"]')
     if (iframe) {
       const frame = await iframe.contentFrame()
+      console.log("usingiFrame")
       if (frame) {
         result = await frame.evaluate(findAndClickButton, keywords)
       }
@@ -46,14 +59,27 @@ import findAndClickButton from './findAndClickButton'
     else {
       result = await page.evaluate(findAndClickButton, keywords)
     }
-
-    console.log(`Found button: ${result}`)
     
-    await page.waitForTimeout(3000)
+    console.log(`Found button: ${result}`)
+
+    await page.waitForTimeout(5000)
     await page.screenshot({
       path: './screenshots/post_cookies3.png'
     })
+    let isShopify = await page.evaluate(() => {
+      try {
+        // @ts-ignore
+        const shopify = Shopify
+        console.log(`Is shopify: ${!!shopify}`)
+        return !!shopify
+      } catch (error) {
+        return false
+      }
+    })
 
+    
     // Let the user know we're done
     console.log('Done!')
+    console.log(isShopify ? "is Shopify!" : "isn't Shopify")
+    await browser.close()
   })()
